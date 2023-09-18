@@ -8,7 +8,7 @@
 import Foundation
 
 struct Product {
-    let id: Int
+    var id: Int? 
     let title: String
     let description: String
     let price: Double
