@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class ProductViewModel: ObservableObject {
     @Published var products = [Product]()
-
+    
     func fetchProducts(completion: @escaping () -> Void) {
         AF.request(Api.products).responseJSON { response in
             switch response.result {
@@ -41,4 +41,28 @@ class ProductViewModel: ObservableObject {
             }
         }
     }
+//    func addProduct(title: String, description: String, price: Double, discountPercentage: Double, rating: Double, stock: Int, brand: String, category: String, thumbnail: String, images: [String], completion: @escaping () -> Void) {
+//            let parameters: [String: Any] = [
+//                "title": title,
+//                "description": description,
+//                "price": price,
+//                "discountPercentage": discountPercentage,
+//                "rating": rating,
+//                "stock": stock,
+//                "brand": brand,
+//                "category": category,
+//                "thumbnail": thumbnail,
+//                "images": images
+//            ]
+//
+//            AF.request(Api.products, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+//                switch response.result {
+//                case .success(_):
+//                    // Product added successfully, you can handle any further actions here
+//                    completion()
+//                case .failure(let error):
+//                    print(error)
+//                }
+//            }
+//        }
 }
