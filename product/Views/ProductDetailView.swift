@@ -12,8 +12,11 @@ struct ProductDetailView: View {
     let product: Product
     @Environment(\.presentationMode) var presentationMode
     
+    @State private var newTitle = ""
+    @State private var newPrice = ""
     
-//Delete Funtion>>
+    
+    //Delete Funtion>>
     func deleteProduct() {
         guard let productId = product.id else {
             print("Product ID is nil")
@@ -34,6 +37,34 @@ struct ProductDetailView: View {
                 }
             }
     }
+//    Edit funtion
+    func editProduct() {
+        guard let productId = product.id else {
+            print("Product ID is nil")
+            return
+        }
+        
+        let url = "https://dummyjson.com/products/\(productId)"
+        let updatedData: [String: Any] = ["title": newTitle, "price": newPrice]
+        
+        AF.request(url, method: .put, parameters: updatedData, encoding: JSONEncoding.default)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    print("Product edited successfully: \(value)")
+                case .failure(let error):
+                    print("Error editing product: \(error)")
+                }
+            }
+    }
+
+    
+
+    
+
+
+
 
 
     var body: some View {
@@ -54,14 +85,17 @@ struct ProductDetailView: View {
                 
                 HStack {
                     Button(action: {
-                        // Add your edit action here
-                        print("Product edited succesfully")
+                        editProduct() // No need to pass arguments here
+                        print("Clicked")
                     }) {
                         Image(systemName: "pencil.circle")
                             .resizable()
                             .frame(width: 32, height: 32)
                             .foregroundColor(.blue)
                     }
+                    
+
+
                     .padding()
                     
                     Button(action: {
