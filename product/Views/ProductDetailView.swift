@@ -59,35 +59,83 @@ struct ProductDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                RemoteImage(url: product.thumbnail)
-                Text(product.title)
-                    .font(.title)
-                    .padding()
+//            HStack{
+//                VStack(alignment: .leading, spacing: 10) {
+                VStack{
+                    RemoteImage(url: product.thumbnail)
+                    Text(product.title)
+                        .font(.title)
+                        .padding()
+                    
+//                    Text("Description: \(product.description)")
+                    Text(product.description)
+                        .padding()
+                    
+                }
+            HStack{
+                    VStack(alignment: .leading, spacing: 10) {
+//
+                        HStack {
+                            Text("Price: ")
+                                .bold()
+                                .padding(.leading, 15)
+                            Spacer()
+                            Text(String(format: "$%.2f", product.price))
+//                                .padding(.leading, 2)
+                                .padding(.trailing, 15)
+                        }
+                        HStack {
+                            Text("Discount: ")
+                                .bold()
+                                .padding(.leading, 15)
+                            Spacer()
+                            Text(String(format: "%.2f%%", product.discountPercentage))
+//                                .padding(.leading, 2)
+                                .padding(.trailing, 15)
+                        }
+                        HStack {
+                            Text("Rating: ")
+                                .bold()
+                                .padding(.leading, 15)
+                            Spacer()
+                            Text(String(format: "%.2f", product.rating))
+//                                .padding(.leading, 2)
+                                .padding(.trailing, 15)
+                        }
+                        HStack {
+                            Text("Stock: ")
+                                .bold()
+                                .padding(.leading, 15)
+                            Spacer()
+                            Text(String(product.stock))
+//                                .padding(.leading, 2)
+                                .padding(.trailing, 15)
+                        }
+                        HStack {
+                            Text("Brand: ")
+                                .bold()
+                                .padding(.leading, 15)
+                            Spacer()
+                            Text(String(product.brand))
+//                                .padding(.leading, 2)
+                                .padding(.trailing, 15)
+                        }
+                        HStack {
+                            Text("Category: ")
+                                .bold()
+                                .padding(.leading, 15)
+                            Spacer() 
+                            Text(String(product.category))
+//                                .padding(.leading, 2)
+                                .padding(.trailing, 15)
+                        }
+                    
+                }
+                Spacer()
+                    
                 
-                Text("Description: \(product.description)")
-                    .padding()
-                
-                Text("Price: \(String(format: "$%.2f", product.price))")
-                    .padding()
-                
-                Text("Discount: \(String(format: "%.2f%%", product.discountPercentage))")
-                    .padding()
-                
-                Text("Rating: \(String(format: "%.2f", product.rating))")
-                    .padding()
-                
-                Text("Stock: \(product.stock)")
-                    .padding()
-                
-                Text("Brand: \(product.brand)")
-                    .padding()
-                
-                Text("Category: \(product.category)")
-                    .padding()
-                
-                // Display additional product details if needed
             }
+            
         }
         .navigationBarTitle(product.title)
         .navigationBarBackButtonHidden(true) // Hide the default back button

@@ -18,39 +18,58 @@ struct ProductView: View {
                 NavigationView{
                     List(viewModel.products, id: \.id) { product in NavigationLink(destination: ProductDetailView(product: product)){
                         VStack {
-                            HStack {
-                                AsyncImage(url: URL(string: product.thumbnail)) { phase in
-                                    switch phase {
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 60, height: 60)
-                                            .cornerRadius(10)
-                                    case .empty, .failure:
-                                        Image(systemName: "photo")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 80, height: 60)
-                                            .cornerRadius(10)
-                                    @unknown default:
-                                        EmptyView()
+                            ZStack(alignment: .topTrailing){
+                                HStack {
+                                    AsyncImage(url: URL(string: product.thumbnail)) { phase in
+                                        switch phase {
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 60, height: 60)
+                                                .cornerRadius(10)
+                                        case .empty, .failure:
+                                            Image(systemName: "photo")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 80, height: 60)
+                                                .cornerRadius(10)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                        
                                     }
-                                }
-                                
-                                VStack(alignment: .leading) {
-                                    Text(product.title)
-                                        .font(.system(size: 20))
-                                    Text(product.description)
-                                        .lineLimit(2)
-                                        .multilineTextAlignment(.leading)
-                                        .foregroundColor(.secondary)
+                                    
+                                    VStack(alignment: .leading) {
+                                        Text(product.title)
+                                            .font(.system(size: 18))
+                                        Text(product.description)
+                                            .lineLimit(2)
+                                            .multilineTextAlignment(.leading)
+                                            .foregroundColor(.secondary)
+                                        
+                                    }
+                                    .padding(.trailing, 0)
+                                    
+                                    Text("-\(String(format: "%.2f%%", product.discountPercentage))")
+                                        .font(.system(size: 14, weight: .bold))
+                                        .padding(EdgeInsets(top: 2, leading: 6, bottom: 2, trailing: 5))
+                                        .background(Color.blue)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(5)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .stroke(Color.white, lineWidth: 1)
+                                        )
+                                        .offset(x: 40, y: -30)
+                                    
                                 }
                             }
+                            
                             HStack {
                                 Text("Price: \(String(format: "$%.2f", product.price))")
                                 Spacer()
-                                Text("Discount: \(String(format: "%.2f%%", product.discountPercentage))")
+                                //                                Text("Discount: \(String(format: "%.2f%%", product.discountPercentage))")
                             }
                             
                             .padding(.leading, 5)
