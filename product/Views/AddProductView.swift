@@ -93,27 +93,36 @@ struct AddProductView: View {
     @State private var category: String = ""
     @State private var thumbnail: String = ""
     @State private var images: String = ""
-
+    
     @ObservedObject var viewModel = ProductAddViewModel()
-
+    
     @State private var showingProductDetail = false
-
+    
     var body: some View {
         VStack {
-            // ... (your existing code)
-            Section {
-                         TextField("Title", text: $title)
-                         TextField("Description", text: $description)
-                         TextField("Price", text: $price)
-                         TextField("Discount Percentage", text: $discountPercentage)
-                         TextField("Rating", text: $rating)
-                         TextField("Stock", text: $stock)
-                         TextField("Brand", text: $brand)
-                         TextField("Category", text: $category)
-                         TextField("Thumbnail", text: $thumbnail)
-                         TextField("Images (comma separated)", text: $images)
-                     }
-
+            
+            ScrollView{
+                Section {
+                    Text("Add new product")
+                        .font(.title2)
+                    VStack(alignment: .leading, spacing: 8) {
+//                        TextFieldWithLabel(label: "Title", text: $title, placeholder: "Enter title")(different placeholder)
+                        TextFieldWithLabel(label: "Title", text: $title)
+                        TextFieldWithLabel(label: "Description", text: $description)
+                        TextFieldWithLabel(label: "Price", text: $price)
+                        TextFieldWithLabel(label: "Discount Percentage", text: $discountPercentage)
+                        TextFieldWithLabel(label: "Rating", text: $rating)
+                        TextFieldWithLabel(label: "Stock", text: $stock)
+                        TextFieldWithLabel(label: "Brand", text: $brand)
+                        TextFieldWithLabel(label: "Category", text: $category)
+                        TextFieldWithLabel(label: "Thumbnail", text: $thumbnail)
+                        TextFieldWithLabel(label: "Images (comma separated)", text: $images)
+                    }
+                }
+                
+            }
+//            padding()
+            
             Section {
                 Button(action: {
                     if let priceValue = Double(price),
@@ -121,7 +130,8 @@ struct AddProductView: View {
                        let ratingValue = Double(rating),
                        let stockValue = Int(stock) {
                         let imagesArray = images.split(separator: ",").map { String($0) }
-
+                        //                        print("discountPercentage: \(discountPercentage)")
+                        
                         viewModel.addProduct(
                             title: title,
                             description: description,
@@ -134,11 +144,16 @@ struct AddProductView: View {
                             thumbnail: thumbnail,
                             images: imagesArray
                         )
-
+                        
                         showingProductDetail = true
                     }
                 }) {
                     Text("Add Product")
+                        .foregroundColor(.white)
+                               .padding()
+                               .frame(maxWidth: .infinity)
+                               .background(Color.blue)
+                               .cornerRadius(8)
                 }
                 .sheet(isPresented: $showingProductDetail) {
                     if let addedProduct = viewModel.addedProduct {
@@ -150,5 +165,48 @@ struct AddProductView: View {
             }
         }
         .padding()
+    }
+}
+
+
+//Section {
+//    VStack(alignment: .leading, spacing: 8) {
+//        HStack {
+//            Text("Title")
+//            Spacer()
+//        }
+//        .padding(.horizontal)
+//
+//        TextField("Title", text: $title)
+//            .padding(.horizontal)
+//            .textFieldStyle(RoundedBorderTextFieldStyle())
+//
+//        HStack {
+//            Text("Description")
+//            Spacer()
+//        }
+//        .padding(.horizontal)
+//
+//        TextField("Description", text: $description)
+//            .padding(.horizontal)
+//            .textFieldStyle(RoundedBorderTextFieldStyle())
+//
+//        // Repeat the pattern for other fields...
+//    }
+//    .padding(.vertical)
+//}
+struct TextFieldWithLabel: View {
+    let label: String
+    @Binding var text: String
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(label)
+            TextField("Enter \(label)", text: $text)
+//            TextField(placeholder, text: $text) // Set the placeholder text here(different placeholder)
+//                .padding(.horizontal)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+        }
+        .padding(.horizontal)
     }
 }

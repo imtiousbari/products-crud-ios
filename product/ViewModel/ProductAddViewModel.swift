@@ -94,6 +94,7 @@ class ProductAddViewModel: ObservableObject {
                 switch response.result {
                 case .success(let value):
                     let json = JSON(value)
+                    print(json)
                     if let id = json["id"].int {
                         let product = Product(
                             id: id,

@@ -68,13 +68,13 @@ struct ProductDetailView: View {
                 Text("Description: \(product.description)")
                     .padding()
                 
-                Text("Price: $\(product.price)")
+                Text("Price: \(String(format: "$%.2f", product.price))")
                     .padding()
                 
-                Text("Discount Percentage: \(product.discountPercentage)%")
+                Text("Discount: \(String(format: "%.2f%%", product.discountPercentage))")
                     .padding()
                 
-                Text("Rating: \(product.rating)")
+                Text("Rating: \(String(format: "%.2f", product.rating))")
                     .padding()
                 
                 Text("Stock: \(product.stock)")
