@@ -5,145 +5,171 @@
 //  Created by Imtious Bari on 18/9/23.
 //
 
-//import SwiftUI
-//
-//struct ProductDetailView: View {
-//    let product: Product
-//
-//    var body: some View {
-//        ScrollView {
-//            VStack {
-//                RemoteImage(url: product.thumbnail)
-//                Text(product.title)
-//                    .font(.title)
-//                    .padding()
-//
-//                Text("Description: \(product.description)")
-//                    .padding()
-//
-//                Text("Price: $\(product.price)")
-//                    .padding()
-//
-//                Text("Discount Percentage: \(product.discountPercentage)%")
-//                    .padding()
-//
-//                Text("Rating: \(product.rating)")
-//                    .padding()
-//
-//                Text("Stock: \(product.stock)")
-//                    .padding()
-//
-//                Text("Brand: \(product.brand)")
-//                    .padding()
-//
-//                Text("Category: \(product.category)")
-//                    .padding()
-//
-//                // Display additional product details if needed
-//
-//                // Add a button to navigate back if necessary
-////                Button("Back to List") {
-////                    // Implement navigation back to the list view here
-////                }
-//                .padding()
-//            }
-//        }
-////        .navigationBarTitle(product.title)
-//    }
-//}
 import SwiftUI
+import Alamofire
 
 struct ProductDetailView: View {
     let product: Product
     @Environment(\.presentationMode) var presentationMode
     
+    
+//Delete Funtion>>
+    func deleteProduct() {
+        guard let productId = product.id else {
+            print("Product ID is nil")
+            return
+        }
+        
+        let url = "https://dummyjson.com/products/\(productId)"
+        
+        AF.request(url, method: .delete)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    print("Successfully deleted product: \(value)")
+                    // Add logic to handle successful deletion here
+                case .failure(let error):
+                    print("Error deleting product: \(error)")
+                }
+            }
+    }
+
+
     var body: some View {
         ScrollView {
-//            HStack{
-//                VStack(alignment: .leading, spacing: 10) {
-                VStack{
-                    RemoteImage(url: product.thumbnail)
-                    Text(product.title)
-                        .font(.title)
-                        .padding()
+            //            HStack{
+            //                VStack(alignment: .leading, spacing: 10) {
+            
+            HStack {
+                Divider().background(Color.red) // Add a top border
+                
+                //                HStack {
+                //                    Text("Action")
+                //                        .bold()
+                //                        .padding(.leading, 15)
+                //                }
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        // Add your edit action here
+                        print("Product edited succesfully")
+                    }) {
+                        Image(systemName: "pencil.circle")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .foregroundColor(.blue)
+                    }
+                    .padding()
                     
-//                    Text("Description: \(product.description)")
-                    Text(product.description)
-                        .padding()
+                    Button(action: {
+                        // Add your delete action here
+                        print("Product deleted succesfully")
+                        deleteProduct()
+                    }) {
+                        Image(systemName: "trash.circle")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .foregroundColor(.red)
+                    }
                     
                 }
+                .padding(.trailing, 15)
+            }
+            
+            VStack{
+                RemoteImage(url: product.thumbnail)
+                Text(product.title)
+                    .font(.title)
+                    .padding()
+                
+                
+                //                    Text("Description: \(product.description)")
+                Text(product.description)
+                    .padding()
+                
+            }
             HStack{
-                    VStack(alignment: .leading, spacing: 10) {
-//
-                        HStack {
-                            Text("Price: ")
-                                .bold()
-                                .padding(.leading, 15)
-                            Spacer()
-                            Text(String(format: "$%.2f", product.price))
-//                                .padding(.leading, 2)
-                                .padding(.trailing, 15)
-                        }
-                        HStack {
-                            Text("Discount: ")
-                                .bold()
-                                .padding(.leading, 15)
-                            Spacer()
-                            Text(String(format: "%.2f%%", product.discountPercentage))
-//                                .padding(.leading, 2)
-                                .padding(.trailing, 15)
-                        }
-                        HStack {
-                            Text("Rating: ")
-                                .bold()
-                                .padding(.leading, 15)
-                            Spacer()
-                            Text(String(format: "%.2f", product.rating))
-//                                .padding(.leading, 2)
-                                .padding(.trailing, 15)
-                        }
-                        HStack {
-                            Text("Stock: ")
-                                .bold()
-                                .padding(.leading, 15)
-                            Spacer()
-                            Text(String(product.stock))
-//                                .padding(.leading, 2)
-                                .padding(.trailing, 15)
-                        }
-                        HStack {
-                            Text("Brand: ")
-                                .bold()
-                                .padding(.leading, 15)
-                            Spacer()
-                            Text(String(product.brand))
-//                                .padding(.leading, 2)
-                                .padding(.trailing, 15)
-                        }
-                        HStack {
-                            Text("Category: ")
-                                .bold()
-                                .padding(.leading, 15)
-                            Spacer() 
-                            Text(String(product.category))
-//                                .padding(.leading, 2)
-                                .padding(.trailing, 15)
-                        }
+                VStack(alignment: .leading, spacing: 10) {
+                    //
+                    HStack {
+                        Text("Price: ")
+                            .bold()
+                            .padding(.leading, 15)
+                        Spacer()
+                        Text(String(format: "$%.2f", product.price))
+                        //                                .padding(.leading, 2)
+                            .padding(.trailing, 15)
+                    }
+                    HStack {
+                        Text("Discount: ")
+                            .bold()
+                            .padding(.leading, 15)
+                        Spacer()
+                        Text(String(format: "%.2f%%", product.discountPercentage))
+                        //                                .padding(.leading, 2)
+                            .padding(.trailing, 15)
+                    }
+                    HStack {
+                        Text("Rating: ")
+                            .bold()
+                            .padding(.leading, 15)
+                        Spacer()
+                        Text(String(format: "%.2f", product.rating))
+                        //                                .padding(.leading, 2)
+                            .padding(.trailing, 15)
+                    }
+                    HStack {
+                        Text("Stock: ")
+                            .bold()
+                            .padding(.leading, 15)
+                        Spacer()
+                        Text(String(product.stock))
+                        //                                .padding(.leading, 2)
+                            .padding(.trailing, 15)
+                    }
+                    HStack {
+                        Text("Brand: ")
+                            .bold()
+                            .padding(.leading, 15)
+                        Spacer()
+                        Text(String(product.brand))
+                        //                                .padding(.leading, 2)
+                            .padding(.trailing, 15)
+                    }
+                    HStack {
+                        Text("Category: ")
+                            .bold()
+                            .padding(.leading, 15)
+                        Spacer()
+                        Text(String(product.category))
+                        //                                .padding(.leading, 2)
+                            .padding(.trailing, 15)
+                    }
                     
                 }
                 Spacer()
-                    
+                
                 
             }
             
+            
+            
+            
+            
         }
         .navigationBarTitle(product.title)
-        .navigationBarBackButtonHidden(true) // Hide the default back button
+        .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            presentationMode.wrappedValue.dismiss() // Dismiss this view
+            presentationMode.wrappedValue.dismiss()
         }) {
             Image(systemName: "arrow.left")
                 .foregroundColor(.blue)
         })
+        
     }
 }
+
+

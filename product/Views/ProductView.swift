@@ -8,7 +8,11 @@ import SwiftUI
 struct ProductView: View {
     @ObservedObject var viewModel = ProductViewModel()
     @State private var isAddProductPresented = false
-    
+
+    @State private var isEditActionSheetPresented = false
+        @State private var isDeleteAlertPresented = false
+        @State private var selectedProduct: Product? = nil
+
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack{
@@ -37,9 +41,9 @@ struct ProductView: View {
                                         @unknown default:
                                             EmptyView()
                                         }
-                                        
+
                                     }
-                                    
+
                                     VStack(alignment: .leading) {
                                         Text(product.title)
                                             .font(.system(size: 18))
@@ -47,10 +51,10 @@ struct ProductView: View {
                                             .lineLimit(2)
                                             .multilineTextAlignment(.leading)
                                             .foregroundColor(.secondary)
-                                        
+
                                     }
                                     .padding(.trailing, 0)
-                                    
+
                                     Text("-\(String(format: "%.2f%%", product.discountPercentage))")
                                         .font(.system(size: 14, weight: .bold))
                                         .padding(EdgeInsets(top: 2, leading: 6, bottom: 2, trailing: 5))
@@ -62,30 +66,30 @@ struct ProductView: View {
                                                 .stroke(Color.white, lineWidth: 1)
                                         )
                                         .offset(x: 40, y: -30)
-                                    
+
                                 }
                             }
-                            
+
                             HStack {
                                 Text("Price: \(String(format: "$%.2f", product.price))")
                                 Spacer()
                                 //                                Text("Discount: \(String(format: "%.2f%%", product.discountPercentage))")
                             }
-                            
+
                             .padding(.leading, 5)
                         }
                         .padding(2)
                     }
                     .navigationBarTitle("Product List")
-                        
+
                     }
                 }
                 .onAppear {
                     viewModel.fetchProducts {}
                 }
-                
+
             }
-            
+
             Button(action: {
                 isAddProductPresented.toggle()
             }) {
@@ -105,3 +109,7 @@ struct ProductView: View {
         .background(Color.blue.edgesIgnoringSafeArea(.all))
     }
 }
+
+
+
+

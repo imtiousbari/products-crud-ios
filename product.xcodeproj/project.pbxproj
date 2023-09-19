@@ -20,6 +20,7 @@
 		7263F2AA2AB7727300F4471B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7263F2A92AB7727300F4471B /* ContentView.swift */; };
 		7263F2AC2AB7727400F4471B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7263F2AB2AB7727400F4471B /* Assets.xcassets */; };
 		7263F2AF2AB7727400F4471B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7263F2AE2AB7727400F4471B /* Preview Assets.xcassets */; };
+		72BC50732ABA170300DB93C7 /* EditProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC50722ABA170300DB93C7 /* EditProductView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		7263F2A92AB7727300F4471B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7263F2AB2AB7727400F4471B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7263F2AE2AB7727400F4471B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		72BC50722ABA170300DB93C7 /* EditProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductView.swift; sourceTree = "<group>"; };
 		94194B97CCA825B2EBE2FC41 /* Pods-product.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-product.debug.xcconfig"; path = "Target Support Files/Pods-product/Pods-product.debug.xcconfig"; sourceTree = "<group>"; };
 		99E079035BD6C45DAE8D2465 /* Pods_product.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_product.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -94,6 +96,7 @@
 				724FA07B2AB78162007447BF /* ProductView.swift */,
 				724FA0832AB8313C007447BF /* ProductDetailView.swift */,
 				724FA08A2AB8B021007447BF /* AddProductView.swift */,
+				72BC50722ABA170300DB93C7 /* EditProductView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7263F2AA2AB7727300F4471B /* ContentView.swift in Sources */,
+				72BC50732ABA170300DB93C7 /* EditProductView.swift in Sources */,
 				724FA0842AB8313C007447BF /* ProductDetailView.swift in Sources */,
 				724FA0762AB78062007447BF /* products.swift in Sources */,
 				724FA0872AB83B57007447BF /* RemoteImage.swift in Sources */,
