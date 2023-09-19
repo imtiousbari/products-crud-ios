@@ -12,7 +12,9 @@ struct EditProductView: View {
     @State private var newTitle = ""
     @State private var newPrice = ""
     
-    var productId: Int // Assuming you have a way to pass the product ID to this view
+    let productId: Int
+    
+//    var productId: Int // Assuming you have a way to pass the product ID to this view
     
     var body: some View {
         VStack {
@@ -23,6 +25,7 @@ struct EditProductView: View {
                 .padding()
             
             Button(action: {
+                print("Clicked")
                 updateProduct(productId: productId, newTitle: newTitle) { result in
                     switch result {
                     case .success(let json):
@@ -56,8 +59,16 @@ struct EditProductView: View {
         AF.request(url, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: ["Content-Type": "application/json"])
             .validate()
             .responseJSON { response in
-                completion(response.result)
+                switch response.result {
+                case .success(let json):
+                    print("JSON Response: \(json)")
+                    completion(.success(json))
+                case .failure(let error):
+                    print("Error editing product: \(error)")
+                    completion(.failure(error))
+                }
             }
     }
+
 
 }
